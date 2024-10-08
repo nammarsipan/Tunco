@@ -2,6 +2,7 @@ from employee import *
 import pandas as pd
 import math
 from datetime import datetime
+import random
 
 
 class EmployeeBok:
@@ -100,19 +101,20 @@ class EmployeeBok:
                     self._date = f'{month}-{self._year}'
                     run = False
                 else:
-                    print("You must nsert a number between 1 to 12")
+                    print("You must insert a number between 1 to 12")
             except ValueError:
                 print("Invalid input")
 
         # remove diplucae employee IDs
         unique_empIds = list(set(empIds))
 
-        # update number of meas
+        # update number of meals
         nMonthsLeft = 12 - (month_int-1)
         for id in unique_empIds:
             emp = self.empBok[id] 
-            newTotMeals = math.floor((emp.get_maxMeals() - emp.get_totalMeals())/nMonthsLeft)
-            emp.update_totalMeals(newTotMeals)
+            max = math.floor((emp.get_maxMeals() - emp.get_totalMeals())/nMonthsLeft) #calculate the maximum amount of meals possible left
+            newMeals = random.randint(0, max)
+            emp.update_totalMeals(newMeals)
         print("--------------------------------------------------------------------------------------------------------------------------------------------------------------")
 
     # write new overview and salary import files
@@ -137,7 +139,7 @@ class EmployeeBok:
             data[self._date].append(emp.get_newMeals())
             
         df_oversikt = pd.DataFrame(data)
-        filename = f'Oversikt måltider {self._date}.xlsx'
+        filename = f'meals_overview_{self._date}.xlsx'
         df_oversikt.to_excel(filename, index=False)
         print(f"Successful wrote file: {filename}")
 

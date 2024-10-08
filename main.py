@@ -18,8 +18,8 @@ ansBok.update_from_file("Ansattnummer", "Ansattnavn")
 # print(ansBok)
 
 # remove André Evju
-del ansBok[2]
-print("Andre Evju has been removed.")
+# del ansBok[2]
+# print("Andre Evju has been removed.")
 
 # write to files
 ansBok.write_book_to_file()
